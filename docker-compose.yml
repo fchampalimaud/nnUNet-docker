@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  nnunet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nnunet
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    env_file:
+      - .env
+    environment:
+      - nnUNet_raw_data_base=/my_data/nnUNet_raw_data_base
+      - nnUNet_preprocessed=/my_data/nnUNet_preprocessed
+      - RESULTS_FOLDER=/my_data/nnUNet_trained_models
+
+    network_mode: host
+    ipc: host
+
+    volumes:
+      - ${DATA_FOLDER}:/my_data
+
+    entrypoint: /bin/bash
