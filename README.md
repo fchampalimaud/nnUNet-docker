@@ -41,6 +41,21 @@ docker-compose run --rm nnunet
 
 Running the previous command will open a shell inside the container. From there, you can run the nnUNet commands as normal.
 
+### Troubleshoting
+
+If receiving the following error:
+
+```bash
+The 'sklearn' PyPI package is deprecated, use 'scikit-learn' rather than 'sklearn' for pip commands.
+```
+
+Please run the following command and try again:
+
+```bash
+SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True docker-compose run --rm nnunet
+```
+**Note**: This should only be required when building (e.g., for the first run) and until nnUNet is updated to use the latest version of scikit-learn.
+
 ## TODO
 
 - [ ] Add support for mapping the nnunet repository from the host system to the container, and install it from there so that changes to the code can be tested without having to rebuild the container.
