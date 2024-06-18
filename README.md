@@ -21,11 +21,20 @@ Additional notes from the nnUNet-docker project can be found in the [Step 1: pre
 
 ## Start and run commands inside container
 
-The Dockerfile is currently based on `nvcr.io/nvidia/pytorch:22.08-py3` image (available [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch)), which has CUDA 11.7.1 (**requires NVIDIA driver 515 or later**) and PyTorch 1.13.1 installed, and the nnUNet package is the latest version at build time available on PyPI (v1.7.0 at the time of writing). The image uses Python 3.8.13.
+The Dockerfile is currently based on `nvcr.io/nvidia/pytorch:22.12-py3` image (available [here](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch)), which has:
+
+- CUDA 11.8 (**requires NVIDIA driver 520 or later**)
+- PyTorch 1.14.0
+- nnUNet 1.7.1
+- nnUNetv2 2.0
+- Python 3.8.10.
+
+> [!IMPORTANT]  
+> for more information on the container image used, please refer to the [official compatibility support matrix documentation](https://docs.nvidia.com/deeplearning/frameworks/support-matrix/index.html#framework-matrix-2022).
 
 ### Prepare a .env file with the data path
 
-Copy the .env.example file to .env and change the path to the parent data folder, which should include the `nnUNet_raw_data_base`, `nnUNet_preprocessed` and `nnUNet_trained_models` folders.
+Copy the .env.example file to .env and change the path to the parent data folder, which should include the `nnUNet_raw`, `nnUNet_preprocessed` and `nnUNet_results` folders.
 
 These are mapped to the container as volumes, so the data will be available to the container and in the host system.
 
@@ -74,9 +83,9 @@ docker build -t nnunet-docker -f Dockerfile .
 ```bash
 docker run -it \
  -v=<HOST PATH TO BASE FOLDER>:/my_data \
- -e "nnUNet_raw_data_base='/my_data/nnUNet_raw_data_base'" \
+ -e "nnUNet_raw='/my_data/nnUNet_raw'" \
  -e "nnUNet_preprocessed='/my_data/nnUNet_preprocessed'" \
- -e "RESULTS_FOLDER='/my_data/nnUNet_trained_models'" \
+ -e "nnUNet_results='/my_data/nnUNet_results'" \
  --gpus=all \
  --rm \
  --name=<TASK NAME> \

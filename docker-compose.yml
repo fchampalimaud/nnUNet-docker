@@ -16,9 +16,9 @@ services:
     env_file:
       - .env
     environment:
-      - nnUNet_raw_data_base=/my_data/nnUNet_raw_data_base
+      - nnUNet_raw=/my_data/nnUNet_raw
       - nnUNet_preprocessed=/my_data/nnUNet_preprocessed
-      - RESULTS_FOLDER=/my_data/nnUNet_trained_models
+      - nnUNet_results=/my_data/nnUNet_results
 
     network_mode: host
     ipc: host
